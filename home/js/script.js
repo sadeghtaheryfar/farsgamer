@@ -1,3 +1,62 @@
+//  script btn ..........................................................
+
+var togglebtns = document.querySelectorAll(".toggle-btn");
+var truebtntoggle = document.querySelectorAll(".true-btn-toggle");
+var falsebtntoggle = document.querySelectorAll(".false-btn-toggle");
+
+togglebtns.forEach((togglebtn,index) => {
+    togglebtn.addEventListener('click', function handleClick(event) {
+        truebtntoggle[index].classList.toggle("hide-item");
+        falsebtntoggle[index].classList.toggle("hide-item");
+    });
+});
+
+//  script range ......................................................
+
+const rangeInput2 = document.querySelectorAll(".range-input2 input"),
+priceInput2 = document.querySelectorAll(".price-input2 h2"),
+range2 = document.querySelector(".slider2 .progress2");
+if(rangeInput2.length != 0)
+{
+    let priceGap2 = 1000;
+    range2.style.right = 0;
+    range2.style.left = 0;
+    priceInput2.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minPrice = parseInt(priceInput2[0].innerHTML),
+            maxPrice = parseInt(priceInput2[1].innerHTML);
+            
+            if((maxPrice - minPrice >= priceGap2) && maxPrice <= rangeInput2[1].max){
+                if(e.target.className === "input-min2"){
+                    rangeInput2[0].value = minPrice;
+                    range2.style.left = ((minPrice / rangeInput2[0].max) * 100) + "%";
+                }else{
+                    rangeInput2[1].value = maxPrice;
+                    range2.style.right = 100 - (maxPrice / rangeInput2[1].max) * 100 + "%";
+                }
+            }
+        });
+    });
+    rangeInput2.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minVal = parseInt(rangeInput2[0].value),
+            maxVal = parseInt(rangeInput2[1].value);
+            if((maxVal - minVal) < priceGap2){
+                if(e.target.className === "range-min2"){
+                    rangeInput2[0].value = maxVal - priceGap2;
+                }else{
+                    rangeInput2[1].value = minVal + priceGap2;
+                }
+            }else{
+                priceInput2[0].innerHTML = minVal;
+                priceInput2[1].innerHTML = maxVal;
+                range2.style.left = ((minVal / rangeInput2[0].max) * 100) + "%";
+                range2.style.right = 100 - (maxVal / rangeInput2[1].max) * 100 + "%";
+            }
+        });
+    });
+}
+
 //  open box notif ......................................................
 
 var iconnotif = document.getElementById("icon-notif");
@@ -521,6 +580,23 @@ if(mainpagesearch != undefined)
             }
 
             itemfilterheadersearch[index].classList.add("color-blue");
+        });
+    });
+
+    var itemfiltersearchmos = document.querySelectorAll(".item-filter-search-mo");
+    var imgitemfiltersearchmo = document.querySelectorAll(".img-item-filter-search-mo");
+    var txtitemfiltersearchmo = document.querySelectorAll(".txt-item-filter-search-mo");
+
+    itemfiltersearchmos.forEach((itemfiltersearchmo,index) => {
+        itemfiltersearchmo.addEventListener('click', function handleClick(event) {
+            for(x = 0; x < itemfiltersearchmos.length; x++)
+            {
+                imgitemfiltersearchmo[x].classList.add("hide-item");
+                txtitemfiltersearchmo[x].classList.remove("color-blue");
+            }
+
+            imgitemfiltersearchmo[index].classList.remove("hide-item");
+            txtitemfiltersearchmo[index].classList.add("color-blue");
         });
     });
 }
