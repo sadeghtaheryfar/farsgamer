@@ -11,13 +11,54 @@ togglebtns.forEach((togglebtn,index) => {
     });
 });
 
+
+const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+radioButtons.forEach((button) => {
+    button.addEventListener("change", () => {
+        radioButtons.forEach((button) => {
+        button.parentElement.classList.remove("active");
+        });
+        button.parentElement.classList.add("active");
+    });
+});
+
+
+const decrementBtn = document.querySelectorAll('.decrement');
+const incrementBtn = document.querySelectorAll('.increment');
+const inputNumber = document.querySelectorAll('.input-number');
+
+
+if(decrementBtn != undefined)
+{
+    decrementBtn.forEach((decrementBtn,index) => {
+        decrementBtn.addEventListener('click', () => {
+            const currentValue = parseInt(inputNumber[index].value);
+            if (currentValue > parseInt(inputNumber[index].min)) {
+                inputNumber[index].value = currentValue - 1;
+            }
+        });
+    });
+
+    incrementBtn.forEach((incrementBtn,index) => {
+        incrementBtn.addEventListener('click', () => {
+            const currentValue = parseInt(inputNumber[index].value);
+            if (currentValue < parseInt(inputNumber[index].max)) {
+                inputNumber[index].value = currentValue + 1;
+            }
+        });
+    });
+}
+
 //  script range ......................................................
 
-const rangeInput2 = document.querySelectorAll(".range-input2 input"),
-priceInput2 = document.querySelectorAll(".price-input2 h2"),
-range2 = document.querySelector(".slider2 .progress2");
-if(rangeInput2.length != 0)
+var mainpagesearch = document.getElementById("main-page-search");
+
+if(mainpagesearch != undefined)
 {
+    const rangeInput2 = document.querySelectorAll(".range-input2 input"),
+    priceInput2 = document.querySelectorAll(".price-input2 h2"),
+    range2 = document.querySelector(".slider2 .progress2");
     let priceGap2 = 1000;
     range2.style.right = 0;
     range2.style.left = 0;
@@ -52,6 +93,48 @@ if(rangeInput2.length != 0)
                 priceInput2[1].innerHTML = maxVal;
                 range2.style.left = ((minVal / rangeInput2[0].max) * 100) + "%";
                 range2.style.right = 100 - (maxVal / rangeInput2[1].max) * 100 + "%";
+            }
+        });
+    });
+
+
+    const rangeInput = document.querySelectorAll(".range-input input"),
+    priceInput = document.querySelectorAll(".price-input h2"),
+    range = document.querySelector(".slider .progress");
+    let priceGap = 1000;
+    range.style.right = 0;
+    range.style.left = 0;
+    priceInput.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minPrice = parseInt(priceInput[0].innerHTML),
+            maxPrice = parseInt(priceInput[1].innerHTML);
+            
+            if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+                if(e.target.className === "input-min"){
+                    rangeInput[0].value = minPrice;
+                    range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                }else{
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+        });
+    });
+    rangeInput.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minVal = parseInt(rangeInput[0].value),
+            maxVal = parseInt(rangeInput[1].value);
+            if((maxVal - minVal) < priceGap){
+                if(e.target.className === "range-min"){
+                    rangeInput[0].value = maxVal - priceGap
+                }else{
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            }else{
+                priceInput[0].innerHTML = minVal;
+                priceInput[1].innerHTML = maxVal;
+                range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
             }
         });
     });
@@ -497,15 +580,35 @@ itemboxheverstores.forEach((itemboxheverstore,index) => {
 
 
 var sidebarpc = document.getElementById("sidebar-pc");
+var sidebardashboard = document.getElementById("sidebar-dashboard");
+var sidebardashboard = document.getElementsByClassName("sidebar-dashboard");
 var boxclothemenumobile = document.getElementById("box-clothe-menu-mobile");
+var boxclothemedashboard = document.getElementById("box-clothe-menu-dashboard");
 var iconforniteheaderstore = document.getElementById("icon-fornite-header-store");
 var icongamingheaderstore = document.getElementById("icon-gaming-header-store");
 var sizeWidth = document.body.offsetWidth;
 
 
-window.onresize = function (){
-    var sizeWidth = document.body.offsetWidth;
-    
+if(sidebarpc != undefined)
+{
+    window.onresize = function (){
+        var sizeWidth = document.body.offsetWidth;
+        
+        if(sizeWidth < 1025)
+        {
+            sidebarpc.classList.add("hide-item");
+            boxclothemenumobile.classList.add("hide-item");
+        }else
+        {
+            sidebarpc.classList.remove("hide-item");
+            if(sidebardashboard[0] != undefined)
+            [
+                sidebardashboard.classList.add("hide-item")
+            ]
+        }
+    }
+
+
     if(sizeWidth < 1025)
     {
         sidebarpc.classList.add("hide-item");
@@ -517,23 +620,30 @@ window.onresize = function (){
 }
 
 
-if(sizeWidth < 1025)
-{
-    sidebarpc.classList.add("hide-item");
-    boxclothemenumobile.classList.add("hide-item");
-}else
-{
-    sidebarpc.classList.remove("hide-item");
-}
-
-
 
 var openmenuM = document.querySelectorAll(".open-menu-mobile");
 
 openmenuM.forEach(openmenuM => {
     openmenuM.addEventListener('click', function handleClick(event) {
-        sidebarpc.classList.toggle("hide-item");
-        boxclothemenumobile.classList.toggle("hide-item");
+        if(sidebarpc != undefined)
+        {
+            sidebarpc.classList.toggle("hide-item");
+        }
+
+        if(sidebardashboard[0] != undefined)
+        {
+            sidebardashboard[0].classList.toggle("hide-item");
+        }
+
+        if(boxclothemenumobile != undefined)
+        {
+            boxclothemenumobile.classList.toggle("hide-item");
+        }
+        
+        if(boxclothemedashboard != undefined)
+        {
+            boxclothemedashboard.classList.toggle("hide-item");
+        }
     });
 });
 
@@ -546,6 +656,24 @@ openboxfortnite.forEach((openboxfortnite,index) => {
     openboxfortnite.addEventListener('click', function handleClick(event) {
         messagecategorystoremobile[index].classList.toggle("hide-item");
         iconforniteheaderstore[index].classList.toggle("rotate-header-icon");
+    });
+});
+
+//  script dashboard page   ..............................................................
+
+var hovermenudashboard = document.querySelectorAll(".hover-menu-dashboard");
+var imgdefaultmenudashboard = document.querySelectorAll(".img-default-menu-dashboard");
+var imghovermenudashboard = document.querySelectorAll(".img-hover-menu-dashboard");
+
+hovermenudashboard.forEach((hovermenudashboard,index) => {
+    hovermenudashboard.addEventListener('mouseover', function handleClick(event) {
+        imgdefaultmenudashboard[index].classList.add("hide-item");
+        imghovermenudashboard[index].classList.remove("hide-item");
+    });
+
+    hovermenudashboard.addEventListener('mouseout', function handleClick(event) {
+        imgdefaultmenudashboard[index].classList.remove("hide-item");
+        imghovermenudashboard[index].classList.add("hide-item");
     });
 });
 
@@ -686,6 +814,46 @@ if(counterrulesitemnumber != undefined)
     {
         counterrulesitemnumber[x].innerHTML = x + 1;
     }
+}
+
+
+//  page cart script .....................................................................
+
+if(document.getElementById("time-time-detalist-pay"))
+{
+    const countDownDate = new Date().getTime() + (8 * 60 * 60 * 1000);
+
+    const timedetalistcart = setInterval(function() {
+        const now = new Date().getTime();
+
+        const distance = countDownDate - now;
+
+        const hours = Math.floor(distance / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("time-time-detalist-pay").innerHTML = hours + ":" + minutes + ":" + seconds;
+
+        if (distance < 0) {
+            clearInterval(x);
+        }
+    }, 1000);
+
+
+    var copytextclipboard = document.querySelectorAll(".copy-text-clipboard");
+    var itemtextclipboard = document.querySelectorAll(".item-text-clipboard");
+
+    copytextclipboard.forEach((copytextclipboard,index) => {
+        copytextclipboard.addEventListener('click', function handleClick(event) {
+            navigator.clipboard.writeText(itemtextclipboard[index].innerHTML);
+            var x = document.getElementById("toast-copy");
+            var timetoastcopy = document.getElementById("time-toast-copy");
+            x.className = "show";
+            timetoastcopy.className = "time-toast-copy";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+            setTimeout(function(){ timetoastcopy.className = timetoastcopy.className.replace("time-toast-copy", ""); }, 5000);
+        });
+    });
 }
 
 //   script faqs page  .......................................................

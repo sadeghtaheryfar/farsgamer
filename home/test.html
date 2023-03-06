@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slider {
+            overflow: hidden;
+            transform: translateZ(0px);
+            display: flex;
+            flex-direction: column;
+            height: 586px;
+            overflow: hidden;
+        }
+
+        .slider img {
+            display: block;
+            height: 100%;
+            animation: 20s infinite jSwwTc;
+            text-align: left;
+        }
+
+        @keyframes jSwwTc {
+            0% {
+                transform: translateY(0%);
+            }
+            100% {
+                transform: translateY(-300%);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <img src="img/img2.jpg" alt="Image 1">
+        <img src="img/img4.jpg" alt="Image 2">
+        <img src="img/img3.jpg" alt="Image 3">
+        <img src="img/img2.jpg" alt="Image 1">
+    </div>
+</body>
+</html>
